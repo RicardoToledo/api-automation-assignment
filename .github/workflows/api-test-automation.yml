@@ -25,7 +25,7 @@ jobs:
           --reporters cli,json --reporter-json-export ./results --suppress-exit-code true
       # Zip report to be sent
       - name: Zip JSON report
-        run: cd results; zip -r ../newman_result.zip *.json; cd ..
+        run: mkdir results; cd results; zip -r ../newman_result.zip *.json; cd ..
       # Upload the results to Calliope Pro
       - name: Upload results to Calliope Pro
         run: curl -X POST
