@@ -1,0 +1,30 @@
+name: Test Automation of Petstore API
+
+# Run on pull requests
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  api-automation-flow:
+    runs-on: ubuntu-latest
+    steps:
+    # Clon repo
+    - uses: actions/checkout@v2
+    # newman
+    - name: Run Postman collection with variables via newman
+    - uses: matt-ball/newman-action@master
+      with:
+        collection: petstore-happy-path.postman_collection.json
+        environment: production.postman_environment.json
+        reporters: '["cli,json"]'
+        reporter: '["--reporter-json-export ./results"]'
+    - name: Zip JSON report
+      run: |
+        cd results; zip -r ../newman_result.zip *.json; cd ..
+    # Upload the results to Calliope Pro
+    - name: Upload results to Calliope Pro
+      run: curl -X POST
+          -H "x-api-key:${{ secrets.CALLIOPEPRO_API_KEY }}"
+          -H "multipart/form-data"
+          -F "file[]=@newman_result.zip"
+          "https://app.calliope.pro/api/v2/profile/${{ secrets.CALLIOPEPRO_PROFILE_ID }}/import"
