@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v2
     # newman
     - name: Run Postman collection with variables via newman
-    - uses: matt-ball/newman-action@master
+      uses: matt-ball/newman-action@master
       with:
         collection: petstore-happy-path.postman_collection.json
         environment: production.postman_environment.json
