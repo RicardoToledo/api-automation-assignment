@@ -20,7 +20,9 @@ jobs:
         run: npm install -g newman
       # Run the Postman collection
       - name: Run Postman collection with variables via newman
-        run: newman run petstore-happy-path.postman_collection.json -e production.postman_environment.json --reporters cli,json --reporter-json-export ./results
+        run: |
+          newman run petstore-happy-path.postman_collection.json -e production.postman_environment.json \
+          --reporters cli,json --reporter-json-export ./results --suppress-exit-code true
       # Zip report to be sent
       - name: Zip JSON report
         run: cd results; zip -r ../newman_result.zip *.json; cd ..
