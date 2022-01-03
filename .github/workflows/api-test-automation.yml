@@ -32,4 +32,4 @@ jobs:
             -H "x-api-key:${{ secrets.CALLIOPEPRO_API_KEY }}"
             -H "multipart/form-data"
             -F "file[]=@newman_result.zip"
-            "https://app.calliope.pro/api/v2/profile/${{ secrets.CALLIOPEPRO_PROFILE_ID }}/import"
+            "https://app.calliope.pro/api/v2/profile/${{ secrets.CALLIOPEPRO_API_PROFILE_ID }}/import"
