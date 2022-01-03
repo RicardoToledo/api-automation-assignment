@@ -22,7 +22,7 @@ jobs:
       - name: Run Postman collection with variables via newman
         run: |
           newman run petstore-happy-path.postman_collection.json -e production.postman_environment.json \
-          --reporters cli,json --reporter-json-export ./results --suppress-exit-code true
+          --reporters cli,json --suppress-exit-code true
       # Zip report to be sent
       - name: Zip JSON report
         run: cd newman; zip -r ../newman_result.zip *.json; cd ..
