@@ -8,23 +8,28 @@ jobs:
   api-automation-flow:
     runs-on: ubuntu-latest
     steps:
-    # Clon repo
-    - uses: actions/checkout@v2
-    # newman
-    - name: Run Postman collection with variables via newman
-    - uses: matt-ball/newman-action@master
-      with:
-        collection: petstore-happy-path.postman_collection.json
-        environment: production.postman_environment.json
-        reporters: '["cli,json"]'
-        reporter: '["--reporter-json-export ./results"]'
-    - name: Zip JSON report
-      run: |
-        cd results; zip -r ../newman_result.zip *.json; cd ..
-    # Upload the results to Calliope Pro
-    - name: Upload results to Calliope Pro
-      run: curl -X POST
-          -H "x-api-key:${{ secrets.CALLIOPEPRO_API_KEY }}"
-          -H "multipart/form-data"
-          -F "file[]=@newman_result.zip"
-          "https://app.calliope.pro/api/v2/profile/${{ secrets.CALLIOPEPRO_PROFILE_ID }}/import"
+      # Checks-out the repo
+      - uses: actions/checkout@v2
+      # Install node
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      # Install the newman command line utility
+      - name: Install newman
+        run: npm install -g newman
+      # Run the Postman collection
+      - name: Run Postman collection with variables via newman
+        run: |
+          newman run petstore-happy-path.postman_collection.json -e production.postman_environment.json \
+          --reporters cli,json --reporter-json-export ./results --suppress-exit-code true
+      # Zip report to be sent
+      - name: Zip JSON report
+        run: cd results; zip -r ../newman_result.zip *.json; cd ..
+      # Upload the results to Calliope Pro
+      - name: Upload results to Calliope Pro
+        run: curl -X POST
+            -H "x-api-key:${{ secrets.CALLIOPEPRO_API_KEY }}"
+            -H "multipart/form-data"
+            -F "file[]=@newman_result.zip"
+            "https://app.calliope.pro/api/v2/profile/${{ secrets.CALLIOPEPRO_PROFILE_ID }}/import"
