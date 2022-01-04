@@ -91,7 +91,7 @@ On Calliope.Pro:
 	- Explore this very interesting approach that I was unable to do due to lack of time.
 		- https://www.tjmaher.com/2019/06/notes-amber-race-exploring-service-apis.html
 		- https://testautomationu.applitools.com/exploring-service-apis-through-test-automation/chapter3.0.html
-	- Add negative and edge test cases (there are a lot of possibilities)
+	- Add negative and edge test cases: I left a couple of examples on some requests on what other possible response scenarios we should test in the future or as TODO
 	- Validate schema and response's body elements
 - Explore performance testing and concurrency capabilities
 - Filtering my tests
