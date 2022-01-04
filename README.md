@@ -8,7 +8,7 @@
     + [Requirements](#requirements)
 - [Test Plan](#-test-plan)
 - [Usage](#usage)
-- [CI/CD with GitHub Actions](#ci-cd-with-github-actions)
+- [CI/CD with GitHub Actions](#cicd-with-github-actions)
     + [Results in Calliope.Pro](#results-in-calliopepro)
 - [License](#license)
 
