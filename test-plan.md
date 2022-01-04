@@ -7,7 +7,7 @@
 - [Test Suite](#test-suite)
 - [Test deliverables](#test-deliverables)
   * [Found bugs](#found-bugs)
-- [Improvements / Next steps](#improvements---next-steps)
+- [Improvements / Next steps](#improvements--next-steps)
   
 ## Test scope
 
