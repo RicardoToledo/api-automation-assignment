@@ -53,41 +53,7 @@
 						},
 						"description": "New pet with:\n\n{{petName} = hardcoded in first instance\n\n{{petId}} = randomly generated using timestamp"
 					},
-					"response": [
-						{
-							"name": "Invalid input",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"description": "Added as a part of security scheme: oauth2",
-										"key": "Authorization",
-										"value": "<token>"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/pet",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pet"
-									]
-								}
-							},
-							"status": "Method Not Allowed",
-							"code": 405,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Update an existing pet",
@@ -1904,31 +1870,36 @@
 					"    pm.expect(pm.response.responseTime).to.be.below(1000);",
 					"});",
 					"",
+					"emptyBody = false;// flag initialized",
 					"var responseCode = pm.response.code;",
+					"",
+					"if (responseBody!=null && responseBody.length==0)",
+					"    emptyBody = true;",
+					"else",
+					"    var responseJSON = pm.response.json();// if response is not empty can be parsed as JSON, else fails",
 					"",
 					"switch (responseCode) {",
 					"    case 200:",
 					"    case 201:",
 					"    case 202:",
-					"        pm.test(\"Status code \" + responseCode + \": Request successfully processed\", function () {",
+					"        pm.test(`Status code ${responseCode}: Request successfully processed`, function () {",
 					"            pm.response.to.not.be.error;",
 					"            pm.response.to.not.have.jsonBody(\"error\");",
 					"        });",
 					"    break;",
 					"    case 404:",
-					"        if (responseBody!=null && responseBody.length==0) {",
+					"        if (emptyBody) {",
 					"            pm.test(\"Status code 404: no response body\", function () {",
 					"                pm.expect.fail();",
 					"            });",
 					"        } else {",
-					"            var responseJSON = pm.response.json();",
-					"            pm.test(\"Status code 404: \\\"\" + responseJSON.message + \"\\\" (possible response inconsistency due server error)\", function () {",
+					"            pm.test(`Status code 404: ${responseJSON.message} (possible response inconsistency due server error)`, function () {",
 					"                pm.expect.fail();",
 					"            });",
 					"        }",
 					"    break;",
 					"    default:",
-					"        pm.test(\"Status code \" + responseCode + \": Response error not expected by test\", function () {",
+					"        pm.test(`Status code ${responseCode}: Response error code not expected by test`, function () {",
 					"            pm.expect.fail();",
 					"        });",
 					"}"

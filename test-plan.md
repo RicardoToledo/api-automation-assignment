@@ -78,6 +78,8 @@ This suite is composed of all endpoints and can be considered as a full happy pa
 
 On API:
 - High severity: Inconsistent response on all endpoints using an object with ID as a parameter.
+- A pet can be created with an empty object
+- Updating a pet with invalid ID or obdy will generate same pet updated
 - New Pet status can be added with all POST and PUT requests
 
 On Calliope.Pro: 
